@@ -5,7 +5,8 @@
         public void ZLP(string ChemicalName, string ExpirationDate, string Pictogram_1, string Pictogram_2, string Pictogram_3, string Pictogram_4, string CodeH, string CodeP, string CompatibilityCode, string PrinterIp)
         {
 
-
+            string P_regex = @"(?<TextoP>(?<Code>P\d{3,})(?<Separador>\s*-\s*)\s*(?<Texto>[^P]+))";
+            string H_regex = @"(?<TextoH>(?<Code>H\d{3,})(?<Separador>\s*–\s*)\s*(?<Texto>[^H]+))";
 
             // Crear una nueva etiqueta ZPL
             var zplLabel = new ZplLabel()
