@@ -28,13 +28,13 @@ namespace ZPL.Print.Test
 
                 ^FX Rectangulo Negro
                 ^FO30,18
-                ^GB720,130,130^FS
+                ^GB1180,130,130^FS
 
 
-                ^FX Texto De Atencion
-                ^FO800,50^CFG
-                ^ADN,50,30
-                ^FD ATENCION ^FS
+                 ^FX Texto De Atencion
+                 ^FO800,160^CFG
+                 ^ADN,50,30
+                 ^FD ATENCION ^FS
 
 
                 ^FX Texto De Rev
@@ -145,7 +145,7 @@ namespace ZPL.Print.Test
         {
             _zpl.AppendFormat($"" +
                 $"^CF0,28" +
-                $"^FO760, 100" +
+                $"^FO760, 220" +
                 $"^FB400,22,," +
                 $"^FD{ text}^FS");
             return this;

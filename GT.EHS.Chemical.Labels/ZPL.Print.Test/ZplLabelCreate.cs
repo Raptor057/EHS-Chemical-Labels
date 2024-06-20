@@ -1,4 +1,7 @@
-﻿namespace ZPL.Print.Test
+﻿using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
+
+namespace ZPL.Print.Test
 {
     internal class ZplLabelCreate
     {
@@ -7,6 +10,40 @@
 
             string P_regex = @"(?<TextoP>(?<Code>P\d{3,})(?<Separador>\s*-\s*)\s*(?<Texto>[^P]+))";
             string H_regex = @"(?<TextoH>(?<Code>H\d{3,})(?<Separador>\s*–\s*)\s*(?<Texto>[^H]+))";
+
+            Regex Pregex = new Regex(P_regex);
+
+            Regex Hregex = new Regex(H_regex);
+
+            // Obtener todas las coincidencias
+            MatchCollection matchesP = Pregex.Matches(CodeP);
+
+            // Obtener todas las coincidencias
+            MatchCollection matchesH = Pregex.Matches(CodeH);
+
+            // Crear una lista para almacenar los primeros 5 matches
+            List<string> PfirstFiveMatches = new List<string>();
+
+            // Crear una lista para almacenar los primeros 5 matches
+            List<string> HfirstFiveMatches = new List<string>();
+
+
+            for (int i = 0; i < Math.Min(5, matchesP.Count); i++)
+            {
+                PfirstFiveMatches.Add(matchesP[i].Groups["TextoP"].Value);
+            }
+
+            for (int i = 0; i < Math.Min(5, matchesH.Count); i++)
+            {
+                HfirstFiveMatches.Add(matchesH[i].Groups["TextoH"].Value);
+            }
+
+            // Concatenar los primeros 5 matches en una sola cadena
+            string TextP = string.Join(", ", PfirstFiveMatches);
+            // Concatenar los primeros 5 matches en una sola cadena
+            string TextH = string.Join(", ", PfirstFiveMatches);
+
+
 
             // Crear una nueva etiqueta ZPL
             var zplLabel = new ZplLabel()
@@ -17,8 +54,8 @@
             .AddPictogram_2($"{Pictogram_2}")
             .AddPictogram_3($"{Pictogram_3}")
             .AddPictogram_4($"{Pictogram_4}")
-            .AddCodeH($"{CodeH}")
-            .AddCodeP($"{CodeP}")
+            .AddCodeH($"{TextP}")
+            .AddCodeP($"{TextH}")
             .AddCompatibilityCode($"{CompatibilityCode}");
 
             // Generar los comandos ZPL
